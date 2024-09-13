@@ -1,40 +1,28 @@
-// models/Modifier.js
-const mongoose = require('mongoose');
+// routes/modifierRoutes.js
+const express = require('express');
+const {
+    createModifier,
+    getModifiers,
+    getModifierById,
+    updateModifier,
+    deleteModifier,
+} = require('../controllers/ModifiersControllers');
 
-const modifierSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
-    consumptions: [
-        {
-            name: {
-                type: String,
-                required: true,
-            },
-            stock: {
-                type: String,
-                required: true,
-            },
-            consumption: {
-                type: Number,
-                required: true,
-                min: 0,
-            },
-        },
-    ],
-    updatedAt: {
-        type: Date,
-        default: Date.now,
-    },
-    updatedBy: {
-        type: String,
-        default: 'Admin', // This can be dynamic based on your authentication
-    },
-});
+const router = express.Router();
 
-module.exports = mongoose.model('Modifier', modifierSchema);
+// Create a new modifier
+router.post('/modifiers', createModifier);
+
+// Get all modifiers
+router.get('/modifiers', getModifiers);
+
+// Get a single modifier by ID
+router.get('/modifiers/:id', getModifierById);
+
+// Update a modifier
+router.put('/modifiers/:id', updateModifier);
+
+// Delete a modifier
+router.delete('/modifiers/:id', deleteModifier);
+
+module.exports = router;
